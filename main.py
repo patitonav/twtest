@@ -73,11 +73,11 @@ f = open(db, 'a')
 for title in posts_to_print:
 	try:
 		json_result = apiAdfly.shorten(title[1].encode('utf8'))
-		print(title[0][:90].encode('utf8')+' '+json_result['data'][0]['short_url'])
-		api.update_status(title[0][:90].encode('utf8')+' '+json_result['data'][0]['short_url'])
+		print(title[0][:90].encode('utf8')+' '+json_result['data'][0]['short_url'] + ' #Tech #News')
+		api.update_status(title[0][:90].encode('utf8')+' '+json_result['data'][0]['short_url']+ ' #Tech #News')
 		if not post_is_in_db(title[0]):
-				f.write(title + "|" + str(current_timestamp) + "\n")
-		time.sleep(900)#Tweet every 15 minutes
+				f.write(title[0] + "|" + str(current_timestamp) + "\n")
 	except Exception, e:
 		print(str(e))
+	time.sleep(60*30)#Tweet every 30 minutes
 f.close
