@@ -8,6 +8,8 @@ from subprocess import check_output
 import sys
 import json
 from AdflyApiManager import AdflyManager
+from random import randint
+
 
 db = 'feeds.db'
 limit = 12 * 3600 * 1000
@@ -79,5 +81,5 @@ for title in posts_to_print:
 				f.write(title[0] + "|" + str(current_timestamp) + "\n")
 	except Exception, e:
 		print(str(e))
-	time.sleep(60*30)#Tweet every 30 minutes
+	time.sleep(60*randint(60,100))#Tweet every 30 minutes
 f.close
