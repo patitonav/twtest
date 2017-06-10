@@ -81,5 +81,5 @@ for title in posts_to_print:
 				f.write(title[0] + "|" + str(current_timestamp) + "\n")
 	except Exception, e:
 		print(str(e))
-	time.sleep(60*randint(60,100))#Tweet every 30 minutes
+	time.sleep(60*randint(60,100))#Tweet every 60-100 minutes
 f.close
