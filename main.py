@@ -45,10 +45,8 @@ def post_is_in_db_with_old_timestamp(title):
 posts_to_print = []
 posts_to_skip = []
 
-url = 'http://feeds.feedburner.com/TechCrunch/'
 
-
-for ulr in TECH_URLS:
+for url in TECH_URLS:
 	feed = feedparser.parse(url)
 	for post in feed.entries:
 	    # if post is already in the database, skip it
@@ -72,14 +70,17 @@ apiAdfly = AdflyManager()
 # (but only if they're not already in there)
 #
 f = open(db, 'a')
+log = open('log.txt','a+')
+log.write('Starting\n')
+time.sleep(60)
 for title in posts_to_print:
 	try:
 		json_result = apiAdfly.shorten(title[1].encode('utf8'))
-		print(title[0][:90].encode('utf8')+' '+json_result['data'][0]['short_url'] + ' #Tech #News')
+		log.write(title[0][:90].encode('utf8')+' '+json_result['data'][0]['short_url'] + ' #Tech #News\n')
 		api.update_status(title[0][:90].encode('utf8')+' '+json_result['data'][0]['short_url']+ ' #Tech #News')
 		if not post_is_in_db(title[0]):
 				f.write(title[0] + "|" + str(current_timestamp) + "\n")
 	except Exception, e:
-		print(str(e))
-	time.sleep(60*randint(60,100))#Tweet every 60-100 minutes
+		log.write(str(e)+'\n')
+	time.sleep(60*randint(40,80))#Tweet every 40-80 minutes
 f.close
